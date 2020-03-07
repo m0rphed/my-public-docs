@@ -180,7 +180,7 @@
     \vskip 1em
     {\large 
     \ifthenelse{\equal{\my@title@type@ru}{coursework}}
-    {Семестровая работа}
+    {Учебная практика}
     {\ifthenelse{\equal{\my@title@type@ru}{diploma}}
     {Дипломная работа}
     {\ifthenelse{\equal{\my@title@type@ru}{master}}
