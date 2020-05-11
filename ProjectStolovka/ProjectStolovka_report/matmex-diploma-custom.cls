@@ -1,5 +1,4 @@
 \NeedsTeXFormat{LaTeX2e}
-% modified by @m0rphed
 \ProvidesClass{matmex-diploma-custom}[2015/05/28 MatMex LaTeX diploma class]
 \def\my@fontsize{12pt}\def\my@baseclass{article}\def\my@title12pt{}\def\my@body14pt{}
 
@@ -20,7 +19,7 @@
   \def\my@title12pt{
     \let\newcommand\renewcommand
     \makeatletter
-    \input{size12.clo}
+    \input{size12.clo}%
     \makeatother  
     \let\newcommand\orignewcommand
   }
@@ -53,7 +52,6 @@
 %% выбрать Unicode шрифт в котором есть кириллические глифы. Ниже
 %% основным шрифтом выбирается Unicode версия шрифта Computer Modern с заcечками
 \usepackage{fontspec}
-\usepackage{microtype}
 \setmainfont[Mapping=tex-text]{CMU Serif}
 \setmonofont[Mapping=tex-text]{CMU Typewriter Text}
 
@@ -62,15 +60,14 @@
 \usepackage{polyglossia}
 \setdefaultlanguage{russian}
 
+
 %% Отступ в первом абзаце
 \usepackage{indentfirst}
 %% Гиперссылки
 \usepackage[colorlinks=true,urlcolor=black,linkcolor=black,filecolor=black,citecolor=black]{hyperref}
 
 %% Включение графических файлов
-%% We don't need to load graphicx since it will be loaded by xunicode (which is loaded by fontspec)
-%% (WARNING): For some reason XeLaTeX won't load images until `graphicx` is loaded manualy
-\usepackage{graphicx}
+%% we don't need to load graphicx since it will be loaded by xunicode (which is loaded by fontspec) 
 \usepackage[titletoc]{appendix}
 
 %% Эта команда добавляет отчеркнутое место для подписи после имени
@@ -103,7 +100,7 @@
 \define@key[ru]{mytitle}{chairHeadPosition}{\def\my@title@chairHeadPosition@ru{#1}}
 \define@key[ru]{mytitle}{year}{\def\my@title@year@ru{#1}}
 \define@key[ru]{mytitle}{city}{\def\my@title@city@ru{#1}}
-\define@choicekey*[ru]{mytitle}{type}{diploma,coursework,master,bachelor}{\def\my@title@type@ru{#1}}
+\define@choicekey*[ru]{mytitle}{type}{diploma,report,coursework,master,bachelor}{\def\my@title@type@ru{#1}}
 
 %% Англоязычный вариант
 \define@key[en]{mytitle}{university}{\def\my@title@university@en{#1}}
@@ -121,7 +118,7 @@
 \define@key[en]{mytitle}{chairHeadPosition}{\def\my@title@chairHeadPosition@en{#1}}
 \define@key[en]{mytitle}{year}{\def\my@title@year@en{#1}}
 \define@key[en]{mytitle}{city}{\def\my@title@city@en{#1}}
-\define@choicekey*[en]{mytitle}{type}{diploma,coursework,master,bachelor}{\def\my@title@type@en{#1}}
+\define@choicekey*[en]{mytitle}{type}{diploma,report,coursework,master,bachelor}{\def\my@title@type@en{#1}}
 
 \newcommand\filltitle[2]{
 %% Значения по умолчанию для обоих языков
@@ -180,14 +177,16 @@
     \vskip 1em
     {\large 
     \ifthenelse{\equal{\my@title@type@ru}{coursework}}
-    {Учебная практика}
+    {Курсовая работа}
     {\ifthenelse{\equal{\my@title@type@ru}{diploma}}
     {Дипломная работа}
+    {\ifthenelse{\equal{\my@title@type@ru}{report}}
+    {Отчёт по учебной практике}
     {\ifthenelse{\equal{\my@title@type@ru}{master}}
     {Магистерская диссертация}
     {\ifthenelse{\equal{\my@title@type@ru}{bachelor}}
     {Бакалаврская работа}
-    }}}
+    }}}}
     \\}
     \vskip 2em
     \ifthenelse{\equal{\my@title@type@ru}{coursework}}
@@ -199,8 +198,8 @@
     \vskip 5em
     Научный руководитель:\\
     \my@title@supervisorPosition@ru\ \my@title@supervisor@ru\sigspace
-    Рецензент:\\
-    \my@title@reviewerPosition@ru\ \my@title@reviewer@ru
+    % Рецензент:\\
+    % \my@title@reviewerPosition@ru\ \my@title@reviewer@ru
     }
 \end{center}
 \end{titlepage}
@@ -238,11 +237,13 @@
     {Course Work}
     {\ifthenelse{\equal{\my@title@type@en}{diploma}}
     {Graduation Thesis}
+    {\ifthenelse{\equal{\my@title@type@en}{report}}
+    {Educational Practice Report}
     {\ifthenelse{\equal{\my@title@type@en}{master}}
     {Master's Thesis}
     {\ifthenelse{\equal{\my@title@type@en}{bachelor}}
     {Bachelor's Thesis}
-    }}}
+    }}}}
     \\}
     \vskip 2em
     \ifthenelse{\equal{\my@title@type@en}{coursework}}

@@ -1,1 +1,0 @@
-xelatex --shell-escape --no-mktex --interaction="nonstopmode" source/Stolovka_ptt_beamer.tex
